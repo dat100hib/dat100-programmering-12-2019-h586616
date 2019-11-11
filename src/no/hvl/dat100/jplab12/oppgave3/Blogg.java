@@ -2,49 +2,91 @@ package no.hvl.dat100.jplab12.oppgave3;
 
 import no.hvl.dat100.jplab12.common.TODO;
 import no.hvl.dat100.jplab12.oppgave1.*;
+import no.hvl.dat100.jplab12.oppgave2.Bilde;
+import no.hvl.dat100.jplab12.oppgave2.Tekst;
 
 public class Blogg {
 
-	// TODO: objektvariable 
+	private Innlegg [] innleggTabell;
+	private int nesteLedig;
 
 	public Blogg() {
-		throw new UnsupportedOperationException(TODO.constructor("Blogg"));
+		innleggTabell = new Innlegg[20];
 	}
 
 	public Blogg(int lengde) {
-		throw new UnsupportedOperationException(TODO.constructor("Blogg"));
+		innleggTabell = new Innlegg[lengde];
 	}
 
 	public int getAntall() {
-		throw new UnsupportedOperationException(TODO.method());
-	}
+		
+		return nesteLedig;
+		
+		}
 	
 	public Innlegg[] getSamling() {
-		throw new UnsupportedOperationException(TODO.method());
+		
+		return innleggTabell;
 
 	}
 	
 	public int finnInnlegg(Innlegg innlegg) {
 
-		throw new UnsupportedOperationException(TODO.method());
+		for (int i = 0; i < innleggTabell.length; i++) {
+			if (innlegg.erLik(innleggTabell[i])) {
+					return i; 
+			}} return -1;
 	}
 
 	public boolean finnes(Innlegg innlegg) {
-		throw new UnsupportedOperationException(TODO.method());
+		
+		int i = 0; 
+		while (innleggTabell[i] != null) {
+			if (innleggTabell[i].erLik(innlegg)) {
+				return true; 
+			}
+		i++;
+		}
+		System.out.println("false");
+		return false; 
 	}
 
 	public boolean ledigPlass() {
-		throw new UnsupportedOperationException(TODO.method());
+		for (int i = 0; i < innleggTabell.length; i++) {
+			if (innleggTabell[i] == null) {
+				return true; 
+			}
+		}
+		return false; 	
 
 	}
 	
 	public boolean leggTil(Innlegg innlegg) {
 
-		throw new UnsupportedOperationException(TODO.method());
+		if (!finnes(innlegg) && ledigPlass()) {
+			innleggTabell[nesteLedig] = innlegg;
+			nesteLedig++;
+			return true;
+		}
+		return false;
 	}
 	
 	public String toString() {
-		throw new UnsupportedOperationException(TODO.method());
+	
+		String utskrift = "" + nesteLedig;
+		for (Innlegg i : innleggTabell) {
+			if (i instanceof Bilde) {
+				Bilde b = (Bilde) i;
+				utskrift = utskrift + "\n" + "BILDE\n" + b.getId() + "\n" + b.getBruker() + "\n" + b.getDato() + 
+						"\n" + b.getLikes() + "\n" + b.getTekst() + "\n" + b.getUrl();
+			}
+			else if (i instanceof Tekst) {
+				Tekst t = (Tekst) i;
+				utskrift = utskrift + "\n" + "TEKST\n" + t.getId() + "\n" + t.getBruker() + "\n" + t.getDato() + 
+						"\n" + t.getLikes() + "\n" + t.getTekst();
+			}	
+		}	
+		return utskrift + "\n";
 	}
 
 	// valgfrie oppgaver nedenfor
